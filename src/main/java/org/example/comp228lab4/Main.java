@@ -7,12 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 
 public class Main extends Application {
     @Override
@@ -58,6 +56,32 @@ public class Main extends Application {
         TextArea textArea = new TextArea();
         root.add(displayButton, 0, 8);
         root.add(textArea, 1, 8, 3, 1);
+
+        // Handle display button action
+        displayButton.setOnAction(e -> {
+            // Construct the display text
+            StringBuilder displayText = new StringBuilder();
+            displayText.append("Student Information:\n");
+            displayText.append("Name: ").append(fields[0].getText()).append("\n");
+            displayText.append("Address: ").append(fields[1].getText()).append(", ").append(fields[2].getText()).append(", ").append(fields[3].getText()).append(", ").append(fields[4].getText()).append("\n");
+            displayText.append("Phone Number: ").append(fields[5].getText()).append("\n");
+            displayText.append("Email: ").append(fields[6].getText()).append("\n");
+            displayText.append("Major: ").append(((RadioButton) majorGroup.getSelectedToggle()).getText()).append("\n");
+            displayText.append("Courses: ").append(coursesBox.getSelectionModel().getSelectedItem()).append("\n");
+            displayText.append("Additional Activities: ");
+            if (studentCouncil.isSelected()) {
+                displayText.append("Student Council, ");
+            }
+            if (volunteerWork.isSelected()) {
+                displayText.append("Volunteer Work, ");
+            }
+            // Remove the trailing comma and space if any
+            if (displayText.charAt(displayText.length() - 1) == ' ') {
+                displayText.delete(displayText.length() - 2, displayText.length());
+            }
+            // Display the text
+            textArea.setText(displayText.toString());
+        });
 
         Scene scene = new Scene(root, 800, 500);
         stage.setScene(scene);
